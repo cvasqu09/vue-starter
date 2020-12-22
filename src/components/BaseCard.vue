@@ -1,7 +1,9 @@
 <template>
   <section>
     <header>
-      <slot name="header"></slot>
+      <slot name="header">
+        <h2>The default</h2>
+      </slot>
     </header>
     <slot name="content"></slot>
   </section>
@@ -14,6 +16,12 @@ export default {
 </script>
 
 <style scoped>
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 section {
   margin: 2rem auto;
   max-width: 30rem;

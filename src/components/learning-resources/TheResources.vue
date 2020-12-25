@@ -9,10 +9,10 @@
 </template>
 
 <script>
-import AddResource from '@/components/learning-resources/AddResource';
-import StoredResources from '@/components/learning-resources/StoredResources';
+  import AddResource from '@/components/learning-resources/AddResource';
+  import StoredResources from '@/components/learning-resources/StoredResources';
 
-export default {
+  export default {
   name: 'TheResources',
   components: { StoredResources, AddResource },
   computed: {
@@ -26,7 +26,8 @@ export default {
   provide() {
     return {
       resources: this.storedResources,
-      addNewResource: this.addResource
+      addNewResource: this.addResource,
+      deleteResource: this.deleteResource,
     }
   },
   data() {
@@ -62,6 +63,10 @@ export default {
 
       this.storedResources.push(newResource);
       this.setSelectedTab('stored-resources')
+    },
+    deleteResource(id) {
+      const resIndex = this.storedResources.findIndex(resource => resource.id === id);
+      this.storedResources.splice(resIndex, 1);
     }
   }
 };

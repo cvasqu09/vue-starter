@@ -1,4 +1,12 @@
 <template>
+  <base-dialog v-if="inputIsInvalid" title="Invalid input">
+    <template #content>
+      <p>Cannot have empty input</p>
+    </template>
+    <template #actions>
+      <base-button @click="confirmError">Okay</base-button>
+    </template>
+  </base-dialog>
   <base-card>
     <form @submit.prevent="submitData">
       <div class="form-control">
@@ -19,19 +27,30 @@
 </template>
 
 <script>
+import BaseDialog from '../ui/BaseDialog';
 export default {
   name: 'AddResource',
+  components: { BaseDialog },
   inject: ['addNewResource'],
   data() {
     return {
       inputTitle: '',
       inputDescription: '',
-      inputLink: ''
+      inputLink: '',
+      inputIsInvalid: false
     };
   },
   methods: {
     submitData() {
+      if (this.inputTitle === '' || this.inputDescription === '' || this.inputLink === '') {
+        this.inputIsInvalid = true;
+        return;
+      }
+
       this.addNewResource(this.inputTitle, this.inputDescription, this.inputLink);
+    },
+    confirmError() {
+      this.inputIsInvalid = false;
     }
   }
 };

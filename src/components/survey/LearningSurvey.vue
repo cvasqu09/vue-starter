@@ -54,15 +54,15 @@ export default {
       }
       this.invalidInput = false;
 
-      fetch('', {
+      fetch(process.env['VUE_APP_FIREBASE_ENDPOINT'], {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          body: JSON.stringify({
-            name: this.enteredName,
-            rating: this.chosenRating
-          })
-        }
+        },
+        body: JSON.stringify({
+          name: this.enteredName,
+          rating: this.chosenRating
+        })
       })
 
       this.enteredName = '';

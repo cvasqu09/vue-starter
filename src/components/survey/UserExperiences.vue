@@ -5,7 +5,7 @@
       <div>
         <base-button>Load Submitted Experiences</base-button>
       </div>
-      <ul>
+      <ul v-if="!isLoading">
         <survey-result
           v-for="result in results"
           :key="result.id"
@@ -13,6 +13,7 @@
           :rating="result.rating"
         ></survey-result>
       </ul>
+      <p v-else>Loading...</p>
     </base-card>
   </section>
 </template>
@@ -21,7 +22,37 @@
 import SurveyResult from './SurveyResult.vue';
 
 export default {
-  props: ['results'],
+  data() {
+    return {
+      results: [],
+      isLoading: false
+    };
+  },
+  methods: {
+    loadExperiences() {
+      fetch(process.env['VUE_APP_FIREBASE_ENDPOINT']).then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        this.isLoading = false;
+      }).then((res) => {
+        const results = [];
+
+        for(let id in res) {
+          results.push({
+            id: id,
+            name: res[id].name,
+            rating: res[id].rating,
+          })
+        }
+
+        this.results = results;
+      }).finally(() => this.isLoading = false);
+    }
+  },
+  mounted() {
+    this.loadExperiences()
+  },
   components: {
     SurveyResult,
   },

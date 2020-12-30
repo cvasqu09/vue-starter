@@ -1,14 +1,14 @@
 <template>
-  <h3>{{ counter }}</h3>
+  <h3>{{ count }}</h3>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'TheCounter',
   computed: {
-    counter() {
-      return this.$store.state.counter;
-    }
+    ...mapGetters(['count'])
   },
 };
 </script>

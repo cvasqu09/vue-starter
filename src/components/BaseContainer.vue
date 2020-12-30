@@ -1,21 +1,25 @@
 <template>
-  <div>
+  <section>
+    <h2>{{ title }}</h2>
     <slot></slot>
-  </div>
+  </section>
 </template>
 
 <script>
 export default {
-  name: 'BaseCard'
+  props: ['title'],
 };
 </script>
 
 <style scoped>
-div {
-  border-radius: 12px;
+section {
+  max-width: 30rem;
+  margin: 2rem auto;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   padding: 1rem;
-  margin: 2rem auto;
-  max-width: 40rem;
+}
+
+h2 {
+  text-align: center;
 }
 </style>

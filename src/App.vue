@@ -1,27 +1,34 @@
 <template>
-  <the-header :title="'Learning Resources App'"></the-header>
-  <the-resources></the-resources>
+  <base-container title="Vuex">
+    <the-counter></the-counter>
+    <button @click="addOne">Add 20</button>
+  </base-container>
 </template>
 
 <script>
-import TheHeader from '@/components/layouts/TheHeader';
-import TheResources from '@/components/learning-resources/TheResources';
+import BaseContainer from './components/BaseContainer.vue';
+import TheCounter from '@/components/TheCounter';
 
 export default {
-  name: 'App',
-  components: { TheResources, TheHeader },
+  components: {
+    TheCounter,
+    BaseContainer,
+  },
+  methods: {
+    addOne() {
+      this.$store.commit('increment', {amount: 20});
+    }
+  }
 };
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
 * {
   box-sizing: border-box;
 }
 
 html {
-  font-family: 'Roboto', sans-serif;
+  font-family: sans-serif;
 }
 
 body {

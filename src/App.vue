@@ -24,7 +24,7 @@ export default {
     ...mapGetters(['isAuthed'])
   },
   methods: {
-    ...mapActions(['increment'])
+    ...mapActions('counter', ['increment'])
   }
 };
 </script>

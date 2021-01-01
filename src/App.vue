@@ -2,7 +2,7 @@
   <h2>My Course Goal</h2>
   <!-- Task 1: Output your main course goal with help of the composition API -->
   <!-- Don't hardcode it into the template, instead hardcode it into the JS code -->
-  <h3 v-if="courseGoalOptions.show">{{courseGoalOptions.goal}}</h3>
+  <h3 v-if="showGoal">{{courseGoal}}</h3>
   <!-- Task 2: Toggle (show/ hide) the goal with help of the button  -->
   <button @click="toggleShowGoal">Toggle Goal</button>
   <!-- Task 3: Manage data in three ways -->
@@ -13,20 +13,17 @@
 </template>
 
 <script>
-import { reactive } from 'vue';
 
 export default {
-  setup() {
-    const courseGoalOptions = reactive({
-      goal: 'Learn Vue',
-      show: true,
-    });
-    const toggleShowGoal = () => {
-      courseGoalOptions.show = !courseGoalOptions.show;
-    }
-
+  data() {
     return {
-      courseGoalOptions, toggleShowGoal,
+      courseGoal: 'Learn Vue',
+      showGoal: true
+    };
+  },
+  methods: {
+    toggleShowGoal() {
+      this.showGoal = !this.showGoal
     }
   }
 };

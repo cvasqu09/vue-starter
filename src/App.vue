@@ -1,115 +1,102 @@
 <template>
+  <header>
+    <h1>Expense Tracker</h1>
+  </header>
   <section>
-    <header><h1>My Friends</h1></header>
-    <ul>
-      <friend-contact
-        v-for="friend in friends"
-        :key="friend.id"
-        :name="friend.name"
-        :id="friend.id"
-        @toggle-favorite="toggleFavorite"
-        :email-address="friend.email"
-        :phone-number="friend.phone">
-      </friend-contact>
-    </ul>
+    <div>Available Funds: {{ availableFunds }}</div>
+    <div>Total Expenses: {{ currentExpenses }}</div>
+    <hr />
+    <div>Funds left: {{ remainingFunds }}</div>
+  </section>
+  <section>
+    <form @submit.prevent="addExpense">
+      <div>
+        <label for="amount">Amount</label>
+        <input id="amount" type="number" v-model="enteredExpense" />
+      </div>
+      <button>Add Expense</button>
+    </form>
   </section>
 </template>
 
 <script>
-import FriendContact from '@/components/FriendContact.vue';
-
 export default {
-  components: { FriendContact },
   data() {
     return {
-      friends: [
-        {
-          id: 'manuel',
-          name: 'Manuel',
-          email: 'test',
-          phone: 'test',
-        },
-        {
-          id: 'karen',
-          name: 'karen',
-          phone: 'test',
-        },
-      ],
+      availableFunds: 100,
+      currentExpenses: 0,
+      enteredExpense: 0,
     };
   },
+  computed: {
+    remainingFunds() {
+      return this.availableFunds - this.currentExpenses;
+    },
+  },
   methods: {
-    toggleFavorite(id) {
-      alert(`here${id}`);
+    addExpense() {
+      this.currentExpenses += this.enteredExpense;
+    },
+  },
+  watch: {
+    remainingFunds(val) {
+      if (val < 0) {
+        alert('You are broke!');
+      }
     },
   },
 };
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Jost&display=swap');
-
 * {
   box-sizing: border-box;
 }
-
 html {
-  font-family: 'Jost', sans-serif;
+  font-family: sans-serif;
 }
-
 body {
   margin: 0;
 }
-
 header {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  margin: 3rem auto;
-  border-radius: 10px;
-  padding: 1rem;
-  background-color: #58004d;
+  width: 100%;
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #30006e;
   color: white;
-  text-align: center;
-  width: 90%;
-  max-width: 40rem;
 }
-
-#app ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-#app li {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  margin: 1rem auto;
-  border-radius: 10px;
+section {
+  margin: 2rem auto;
+  max-width: 35rem;
   padding: 1rem;
-  text-align: center;
-  width: 90%;
-  max-width: 40rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 12px;
 }
 
-#app h2 {
-  font-size: 2rem;
-  border-bottom: 4px solid #ccc;
-  color: #58004d;
-  margin: 0 0 1rem 0;
+form div {
+  margin: 1rem 0;
 }
-
-#app button {
+input {
+  width: 100%;
+  padding: 0.15rem;
+}
+label {
+  font-weight: bold;
+  margin: 0.5rem 0;
+}
+button {
+  background-color: #30006e;
+  border: 1px solid #30006e;
   font: inherit;
   cursor: pointer;
-  border: 1px solid #ff0077;
-  background-color: #ff0077;
+  padding: 0.5rem 1.5rem;
   color: white;
-  padding: 0.05rem 1rem;
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.26);
 }
-
-#app button:hover,
-#app button:active {
-  background-color: #ec3169;
-  border-color: #ec3169;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.26);
+button:hover,
+button:active {
+  background-color: #5819ac;
+  border-color: #5819ac;
 }
-
 </style>
